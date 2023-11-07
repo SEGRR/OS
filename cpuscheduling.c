@@ -45,11 +45,10 @@ void sort(Process ready_queue[] , int n){
 
     for(int i = 0 ; i< n ;i++){
         for(int j =0 ; j<n-1 ; j++){
-            if(ready_queue[j].bt > ready_queue[j++].bt){
-               // swap(&ready_queue[j] , &ready_queue[j++]);
+            if(ready_queue[j].bt > ready_queue[j+1].bt){
                Process temp = ready_queue[j];
-               ready_queue[j] = ready_queue[j++];
-               ready_queue[j++] = temp;
+               ready_queue[j] = ready_queue[j+1];
+               ready_queue[j+1] = temp;
             }
         }
     }
@@ -119,8 +118,9 @@ void srtf(Process ready_queue[] , int n){
 
 void rr(Process ready_queue[] ,int n , int tq ){
 
-     for(int i = 0 ; i< n ;i++){
-        for(int j = 0 ; j < n-1 ; j++){
+  // sort by arrival time
+   for(int i = 0 ; i< n ;i++){
+        for(int j =0 ; j<n-1 ; j++){
             if(ready_queue[j].at > ready_queue[j+1].at){
                Process temp = ready_queue[j];
                ready_queue[j] = ready_queue[j+1];
@@ -128,7 +128,12 @@ void rr(Process ready_queue[] ,int n , int tq ){
             }
         }
     }
+
     int rt[n];
+    int queue[n*n];
+    for(int i = 0; i<n*n ; i++){
+        queue[i] = -1;
+    }
     for(int i = 0 ; i< n ;i++) rt[i] = ready_queue[i].bt;
 
     int time = 0;
@@ -138,8 +143,9 @@ void rr(Process ready_queue[] ,int n , int tq ){
     if(ready_queue[0].at > 0){
         printf("|0|----");
         time = ready_queue[0].at;
+       
     }
-
+  
     while(count < n){
 
      if(rt[i] > 0 && ready_queue[i].at <= time){
@@ -165,6 +171,8 @@ void rr(Process ready_queue[] ,int n , int tq ){
                  p->tat = time - p->at;
                 p->wt = p->tat - p->bt;
                 }
+               
+
             }
 
 
